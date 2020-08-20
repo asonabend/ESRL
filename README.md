@@ -1,6 +1,6 @@
 # Expert-Supervised Reinforcement Learning (ESRL)
 
-Code for Expert Supervised Reinforcement Learning (ESRL). If you use our code please cite our [Expert-Supervised Reinforcement Learning for Offline Policy Learning and Evaluation paper](https://arxiv.org/abs/2006.13189).
+Code for Expert-Supervised Reinforcement Learning (ESRL). If you use our code please cite our [Expert-Supervised Reinforcement Learning for Offline Policy Learning and Evaluation paper](https://arxiv.org/abs/2006.13189).
 
 Repo is set up for Riverswim environment and will work for any episodic, discrete state and action space environment. 
 
