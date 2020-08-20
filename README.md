@@ -1,4 +1,4 @@
-# Expert Supervised Reinforcement Learning (ESRL)
+# Expert-Supervised Reinforcement Learning (ESRL)
 
 Code for Expert Supervised Reinforcement Learning (ESRL). If you use our code please cite our [Expert-Supervised Reinforcement Learning for Offline Policy Learning and Evaluation paper](https://arxiv.org/abs/2006.13189).
 
