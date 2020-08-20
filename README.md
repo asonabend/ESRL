@@ -33,7 +33,7 @@ see the [ESRL paper](https://arxiv.org/abs/2006.13189) or our [ESRL video](https
 ```
 @article{ASW2020expertsupervised,
     title={Expert-Supervised Reinforcement Learning for Offline Policy Learning and Evaluation},
-    author={Aaron Sonabend W and Junwei Lu and Leo A. Celi and Tianxi Cai and Peter Szolovits},
+    author={Aaron Sonabend and Junwei Lu and Leo A. Celi and Tianxi Cai and Peter Szolovits},
     year={2020},
     eprint={2006.13189},
     archivePrefix={arXiv},
