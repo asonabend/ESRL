@@ -171,18 +171,18 @@ def step_WIS_eval_mu(H_T,mu_st,pi_tsa,tau):
 # ESRL OPPE APPROACH
 
 # Computes value function samples at state s by sampling MDP's and running policy on them
-def sample_Vs(pi_sa,H_T,mu_st,samps_No,tau,A_space,S_space,seed,sepsis=False,epsilon=0):    
+def sample_Vs(pi_sa,H_Test,H_Train,mu_st,samps_No,tau,A_space,S_space,seed,sepsis=False,epsilon=0):    
     np.random.seed(seed)
     V_samps = np.zeros((samps_No))
     # Sample MDP from posterior based on IPW repo:
-    R_sa_dict, P_sas_dict = sampleK_MDPs(S_card=len(S_space),A_space=A_space,H_tk=H_T,K=samps_No,sepsis=sepsis)#,pi_sa=pi_sa)
-    for i in range(samps_No):
+    R_sa_dict, P_sas_dict = sampleK_MDPs(S_card=len(S_space),A_space=A_space,H_tk=H_Train,K=samps_No,sepsis=sepsis)
+    for i in tqdm(range(samps_No)):
         # Sample MDP from posterior based on IPW repo:
         R_sa, P_sas = R_sa_dict[i], P_sas_dict[i]
         # initialize value V and policy function dictionaries:
         if sepsis:
-            start_s = np.where(H_T[:,3]==-1)[0]+1 # index of initial states rows
-            s = int(np.random.choice(H_T[start_s[:-1],0]))
+            start_s = np.where(H_Test[:,3]==-1)[0]+1 # index of initial states rows
+            s = int(np.random.choice(H_Test[start_s[:-1],0]))
         else: 
             s = 0 #all episodes start at state = 0 in riverswim
         V_s0 = 0
@@ -244,7 +244,7 @@ class experienceRepository(object):
 # Sample K MDPs simultaneously 
 def sampleK_MDPs(S_card,A_space,H_tk,K,pi_sa=None,sepsis=False):
     if sepsis:
-        prior_par = {'m0':0,'lamb0':1e+3,'alpha0':5.01,'gamma0':1}
+        prior_par = {'m0':0,'lamb0':1,'alpha0':5.01,'gamma0':1}
     else:
         prior_par = {'m0':0,'lamb0':1,'alpha0':1.01,'gamma0':1}    # Riverswim
         #prior_par = {'m0':1,'lamb0':.01,'alpha0':1.1,'gamma0':1}    # Frozen lake
@@ -349,20 +349,6 @@ def train_pi(env_name):
         else:
             sars_pairs = np.hstack((state_seq[:-1],action_seq[1:],reward_seq[1:],np.vstack((state_seq[2:],float("-inf")))))
             H_tk = np.vstack((H_tk,sars_pairs))
-
-        ##
-        
-            
-        #if k % 500==0:
-            #print(k,np.mean(episode_rewards[-500:]))
-            
-            #plt.plot([np.mean(episode_rewards[:i])  for i in range (len(episode_rewards))])
-            #plt.plot([np.mean(H_tk[:i,2])  for i in range (len(H_tk))])
-            #plt.show()
-            #print(np.mean(episode_rewards[-500:]))
-            #R_sa, P_sas = sampleK_MDPs(S_card=len(S_space),A_space=A_space,H_tk=H_tk,K=500)
-            #plt.hist([R_sa[k][(0,0)] for k in range(500)], color = 'blue', edgecolor = 'black',bins =40)
-            #plt.show()
 
     pickle.dump({'R_sa':R_sa,'P_sas':P_sas,'muK_st':muK_st}, 
             open( './models/'+env_name+'_PSRL_optPolicy.p', 'wb' ) )
@@ -517,7 +503,7 @@ def ESRL(H_T,alpha,tau,K_no,pi_st,pi_tsa,visited_states,S_space,A_space,sepsis=F
     V_st = {k:{(s,tau):0 for s in S_space} for k in range(K_no)}
     mu_st_alpha,mu_st,maj_vote_mu,maj_vote_mu_alpha,maj_vote_set_alpha = {k:{} for k in range(K_no)},{k:{} for k in range(K_no)},{},{},{}
     Qs_st = {}
-    for t in range(tau-1,-1,-1):
+    for t in tqdm(range(tau-1,-1,-1)):
         for s in S_space:
             for k in range(K_no):
                 ##
