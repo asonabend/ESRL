@@ -181,7 +181,8 @@ def sample_Vs(pi_sa,H_T,mu_st,samps_No,tau,A_space,S_space,seed,sepsis=False,eps
         R_sa, P_sas = R_sa_dict[i], P_sas_dict[i]
         # initialize value V and policy function dictionaries:
         if sepsis:
-            break # won't use this function
+            start_s = np.where(H_T[:,3]==-1)[0]+1 # index of initial states rows
+            s = int(np.random.choice(H_T[start_s[:-1],0]))
         else: 
             s = 0 #all episodes start at state = 0 in riverswim
         V_s0 = 0
@@ -189,7 +190,7 @@ def sample_Vs(pi_sa,H_T,mu_st,samps_No,tau,A_space,S_space,seed,sepsis=False,eps
         for t in range(tau):
             # Choose action a according to (random) policy    
             if np.random.binomial(1,epsilon)==1: # w.p. epsilon choose random action
-                a = int(np.random.choice(2, 1, p=[0.5,0.5]))
+                a = np.random.choice(A_space)
             else:
                 a = mu_st[(s,t)] # w.p. 1-epsilon choose mu_k(s)
             sum_pi = 1#sum([np.product(weights)/pi_sa[(s,a)] for a in A_space])
