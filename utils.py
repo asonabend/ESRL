@@ -466,7 +466,7 @@ def P_H0_MV(s,t,a_behavior,a_mu,Mk_R_sa,Mk_P_sas,kset,V_st,visited_states,pi_tsa
         i += 1
     return np.mean(Qs[:,a_mu]<Qs[:,a_behavior]),Qs
 
-#### Estimates behavior policy and propensity scores for IS weights (there's an issue with (s,a) that are not in observed data)
+#### Estimates behavior policy and propensity scores for IS weights (assigns None to (s,a) pairs not in observed data)
 def compute_pi_tsa(episodes_repo,S_space,A_space,tau,sepsis=False,H_T=None):
     if not sepsis:
         episodes = episodes_repo.memory
