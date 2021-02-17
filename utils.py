@@ -174,6 +174,7 @@ def step_WIS_eval_mu(H_T,mu_st,pi_tsa,tau):
 def sample_Vs(pi_sa,H_Test,H_Train,mu_st,samps_No,tau,A_space,S_space,seed,sepsis=False,epsilon=0):    
     np.random.seed(seed)
     V_samps = np.zeros((samps_No))
+    S_samps = np.zeros((samps_No))
     # Sample MDP from posterior based on IPW repo:
     R_sa_dict, P_sas_dict = sampleK_MDPs(S_card=len(S_space),A_space=A_space,H_tk=H_Train,K=samps_No,sepsis=sepsis)
     for i in tqdm(range(samps_No)):
@@ -199,7 +200,8 @@ def sample_Vs(pi_sa,H_Test,H_Train,mu_st,samps_No,tau,A_space,S_space,seed,sepsi
             # Sample an action according to the sampled MDP and action taken
             s = int(np.random.choice(len(S_space),1, p=P_sas[(s,a)]))
         V_samps[i] = V_s0
-    return V_samps
+        S_samps[i] = s
+    return V_samps, S_samps
 
 ################################################
 ################# Generate dataset #############
