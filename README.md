@@ -31,12 +31,16 @@ see the [ESRL paper](https://arxiv.org/abs/2006.13189) or our [ESRL video](https
 ### Bibtex
 
 ```
-@article{ASW2020expertsupervised,
-    title={Expert-Supervised Reinforcement Learning for Offline Policy Learning and Evaluation},
-    author={Aaron Sonabend and Junwei Lu and Leo A. Celi and Tianxi Cai and Peter Szolovits},
-    year={2020},
-    eprint={2006.13189},
-    archivePrefix={arXiv},
-    primaryClass={cs.LG}
+@inproceedings{ASW2020expertsupervised,
+ author = {Sonabend, Aaron and Lu, Junwei and Celi, Leo Anthony and Cai, Tianxi and Szolovits, Peter},
+ booktitle = {Advances in Neural Information Processing Systems},
+ editor = {H. Larochelle and M. Ranzato and R. Hadsell and M. F. Balcan and H. Lin},
+ pages = {18967--18977},
+ publisher = {Curran Associates, Inc.},
+ title = {Expert-Supervised Reinforcement Learning for Offline Policy Learning and Evaluation},
+ url = {https://proceedings.neurips.cc/paper/2020/file/daf642455364613e2120c636b5a1f9c7-Paper.pdf},
+ volume = {33},
+ year = {2020}
 }
+
 ```
